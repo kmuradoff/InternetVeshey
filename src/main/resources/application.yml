@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: InternetVeshey
+  jpa:
+    hibernate:
+      ddl-auto: none
