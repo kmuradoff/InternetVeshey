@@ -6,4 +6,5 @@ import ru.unn.internetveshey.jpa.model.CarBrand;
 
 @Repository
 public interface CarBrandRepository extends JpaRepository<CarBrand, Long> {
+    CarBrand findFirstByBrand(String brand);
 }

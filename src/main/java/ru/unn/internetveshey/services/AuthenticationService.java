@@ -26,10 +26,9 @@ public class AuthenticationService {
             throw new UnauthorizedException("WRONG_PASSWORD", "Неверный пароль");
         }
 
-        return new JwtResponse(jwtService.generateToken());
+        return new JwtResponse(jwtService.generateToken(), user.getRole().getValue());
     }
 
-    @HasRole(Role.ADMIN)
     public void register(SignupRequest signupRequest) {
         String login = signupRequest.getLogin();
         if (usersRepository.findFirstByLogin(login) != null) {
@@ -48,6 +47,7 @@ public class AuthenticationService {
                 .middleName(signupRequest.getMiddleName())
                 .residenceCountry(signupRequest.getResidenceCountry())
                 .driverLicenseNumber(signupRequest.getDriverLicenseNumber())
+                .role(signupRequest.getRole())
                 .build();
 
         usersRepository.save(user);

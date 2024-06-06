@@ -4,8 +4,6 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import ru.unn.internetveshey.dto.enums.FuelType;
-import ru.unn.internetveshey.dto.enums.Role;
-
 
 @Entity
 @Getter
@@ -18,7 +16,6 @@ public class Car {
     private String registrationNumber;
     private String carName;
     private int fuelLevel;
-    private Role role;
     private boolean isActive = false;
     private boolean isLocked = true;
 

@@ -3,6 +3,7 @@ package ru.unn.internetveshey.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.unn.internetveshey.payload.request.LoginRequest;
@@ -17,12 +18,12 @@ public class AuthController {
     private final AuthenticationService authenticationService;
 
     @PostMapping("/login")
-    public ResponseEntity<JwtResponse> login(LoginRequest loginRequest) {
+    public ResponseEntity<JwtResponse> login(@RequestBody LoginRequest loginRequest) {
         return ResponseEntity.ok(authenticationService.login(loginRequest));
     }
 
     @PostMapping("/register")
-    public ResponseEntity<String> register(SignupRequest signupRequest) {
+    public ResponseEntity<String> register(@RequestBody SignupRequest signupRequest) {
         authenticationService.register(signupRequest);
         return ResponseEntity.ok("User registered successfully");
     }

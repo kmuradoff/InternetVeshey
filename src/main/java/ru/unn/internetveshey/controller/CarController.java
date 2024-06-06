@@ -19,6 +19,7 @@ public class CarController {
 
     @PostMapping("/add")
     public ResponseEntity<String> addCar(@RequestBody CarDto carRequest) {
+        carService.addCar(carRequest);
         return ResponseEntity.ok(String.format("Car %s added successfully", carRequest.getRegistrationNumber()));
     }
 
@@ -34,12 +35,14 @@ public class CarController {
 
     @PostMapping("/brand/add")
     public ResponseEntity<String> addCarBrand(@RequestBody CarBrandDto carBrandDto) {
+        carService.addCarBrand(carBrandDto);
         return ResponseEntity.ok(String.format("Car brand %s added successfully", carBrandDto.getName()));
     }
 
-    @PostMapping("/model/add")
-    public ResponseEntity<String> addCarModel(@RequestBody CarModelDto carModelDto) {
-        return ResponseEntity.ok(String.format("Car model %s added successfully", carModelDto.getName()));
+    @PostMapping("/{brand}/model/add")
+    public ResponseEntity<String> addCarModel(@PathVariable("brand") String brand, @RequestBody CarModelDto carModelDto) {
+        carService.addCarModel(brand, carModelDto);
+        return ResponseEntity.ok(String.format("Car model %s added successfully to brand %s", carModelDto.getName(), brand));
     }
 
     @GetMapping("/{brand}")

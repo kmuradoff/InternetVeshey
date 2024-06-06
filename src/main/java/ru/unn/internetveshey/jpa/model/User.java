@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import lombok.*;
 import ru.unn.internetveshey.dto.enums.Country;
+import ru.unn.internetveshey.dto.enums.Role;
 import ru.unn.internetveshey.jpa.model.payment.PaymentCard;
 
 import java.util.Set;
@@ -29,6 +30,7 @@ public class User {
     private String middleName;
     private Country residenceCountry;
     private String driverLicenseNumber;
+    private Role role;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_to_paymentcards", schema = "internet_veshey",

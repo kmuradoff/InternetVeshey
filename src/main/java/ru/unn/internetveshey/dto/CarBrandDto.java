@@ -11,6 +11,5 @@ import java.util.Set;
 public class CarBrandDto {
     private String name;
     private byte[] brandLogo;
-    private Colors color;
     private Set<CarModelDto> carModels;
 }
