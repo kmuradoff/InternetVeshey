@@ -3,6 +3,6 @@
 -- changeset kmuradoff:4
 CREATE TABLE internet_veshey.location (
     id BIGSERIAL PRIMARY KEY,
-    latitude VARCHAR(255) NOT NULL,
-    longitude VARCHAR(255) NOT NULL
+    latitude DOUBLE PRECISION NOT NULL,
+    longitude DOUBLE PRECISION NOT NULL
 );
