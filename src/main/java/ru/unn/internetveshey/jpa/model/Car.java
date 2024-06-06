@@ -32,14 +32,23 @@ public class Car {
     private FuelType fuelType;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "location_id",
+    @JoinColumn(name = "start_location_id",
             referencedColumnName = "id",
             nullable = false)
-    private Location location;
+    private Location startLocation;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "end_location_id",
+            referencedColumnName = "id",
+            nullable = false)
+    private Location endLocation;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "tariff_id",
             referencedColumnName = "id",
             nullable = false)
     private CarTariff carTariff;
+
+
+
 }

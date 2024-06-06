@@ -12,6 +12,6 @@ public class Location {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    private String latitude;
-    private String longitude;
+    private double latitude;
+    private double longitude;
 }

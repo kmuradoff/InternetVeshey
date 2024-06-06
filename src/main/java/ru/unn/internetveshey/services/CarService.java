@@ -28,6 +28,9 @@ public class CarService {
                 .toList();
     }
 
-
-
+    public List<CarDto> getAllCarsByBrand(String brand) {
+        return carRepository.findAllByCarBrand_Brand(brand).stream()
+                .map(carMapper::fromCar)
+                .toList();
+    }
 }

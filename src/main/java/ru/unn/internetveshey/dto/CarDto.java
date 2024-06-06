@@ -17,6 +17,7 @@ public class CarDto {
     private boolean isLocked = true;
     private CarBrand carBrand;
     private FuelType fuelType;
-    private Location location;
+    private Location startLocation;
+    private Location endLocation;
     private CarTariff carTariff;
 }
