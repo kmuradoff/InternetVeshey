@@ -2,8 +2,7 @@ package ru.unn.internetveshey.jpa.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import ru.unn.internetveshey.dto.enums.Country;
 import ru.unn.internetveshey.jpa.model.payment.PaymentCard;
 
@@ -13,6 +12,9 @@ import java.util.Set;
 @Getter
 @Setter
 @Table(name = "user", schema = "internet_veshey")
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

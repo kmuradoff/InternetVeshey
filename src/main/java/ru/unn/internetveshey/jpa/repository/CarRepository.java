@@ -6,4 +6,5 @@ import ru.unn.internetveshey.jpa.model.Car;
 
 @Repository
 public interface CarRepository extends JpaRepository<Car, Long> {
+    Car findFirstByRegistrationNumber(String registrationNumber);
 }
