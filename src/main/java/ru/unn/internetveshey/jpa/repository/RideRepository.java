@@ -6,4 +6,5 @@ import ru.unn.internetveshey.jpa.model.Ride;
 
 @Repository
 public interface RideRepository extends JpaRepository<Ride, Long> {
+    Ride findFirstByUser_LoginAndEndTimeIsNull(String login);
 }

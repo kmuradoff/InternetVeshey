@@ -27,13 +27,6 @@ public class Invoice {
             nullable = false)
     private PaymentCard paymentCard;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "user_id",
-            referencedColumnName = "id",
-            nullable = false)
-    private User user;
-
-    //onetoone for Ride
     @OneToOne(mappedBy = "invoice",
             cascade = CascadeType.ALL,
             fetch = FetchType.EAGER,

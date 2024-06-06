@@ -20,7 +20,7 @@ public class Ride {
     private LocalDateTime startTime;
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     private LocalDateTime endTime;
-    private float distance;
+    private double distance;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "car_id",

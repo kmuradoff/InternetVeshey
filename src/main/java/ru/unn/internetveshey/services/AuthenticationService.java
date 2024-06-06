@@ -3,12 +3,12 @@ package ru.unn.internetveshey.services;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import ru.unn.internetveshey.dto.UserDto;
+import ru.unn.internetveshey.dto.enums.Role;
 import ru.unn.internetveshey.exceptions.BadRequestException;
 import ru.unn.internetveshey.exceptions.UnauthorizedException;
+import ru.unn.internetveshey.interceptor.HasRole;
 import ru.unn.internetveshey.jpa.model.User;
 import ru.unn.internetveshey.jpa.repository.UserRepository;
-import ru.unn.internetveshey.mapper.UserMapper;
 import ru.unn.internetveshey.payload.request.LoginRequest;
 import ru.unn.internetveshey.payload.request.SignupRequest;
 import ru.unn.internetveshey.payload.response.JwtResponse;
@@ -17,17 +17,16 @@ import ru.unn.internetveshey.payload.response.JwtResponse;
 @RequiredArgsConstructor
 public class AuthenticationService {
     private final UserRepository usersRepository;
-    private final UserMapper userMapper;
     private final JwtService jwtService;
     private final PasswordEncoder passwordEncoder;
 
     public JwtResponse login(LoginRequest loginRequest) {
-        UserDto user = userMapper.fromUser(usersRepository.findFirstByLoginSafe(loginRequest.getLogin()));
+        User user = usersRepository.findFirstByLoginSafe(loginRequest.getLogin());
         if (!passwordEncoder.matches(loginRequest.getPassword(), user.getPassword())) {
             throw new UnauthorizedException("WRONG_PASSWORD", "Неверный пароль");
         }
 
-        return new JwtResponse(jwtService.generateToken());
+        return new JwtResponse(jwtService.generateToken(), user.getRole().getValue());
     }
 
     public void register(SignupRequest signupRequest) {
@@ -38,16 +37,18 @@ public class AuthenticationService {
 
         String hashPassword = passwordEncoder.encode(signupRequest.getPassword());
 
-        User user = new User();
-        user.setLogin(login);
-        user.setPassword(hashPassword);
-        user.setEmail(signupRequest.getEmail());
-        user.setPhone(signupRequest.getPhone());
-        user.setFirstName(signupRequest.getFirstName());
-        user.setLastName(signupRequest.getLastName());
-        user.setMiddleName(signupRequest.getMiddleName());
-        user.setResidenceCountry(signupRequest.getResidenceCountry());
-        user.setDriverLicenseNumber(signupRequest.getDriverLicenseNumber());
+        User user = User.builder()
+                .login(login)
+                .password(hashPassword)
+                .email(signupRequest.getEmail())
+                .phone(signupRequest.getPhone())
+                .firstName(signupRequest.getFirstName())
+                .lastName(signupRequest.getLastName())
+                .middleName(signupRequest.getMiddleName())
+                .residenceCountry(signupRequest.getResidenceCountry())
+                .driverLicenseNumber(signupRequest.getDriverLicenseNumber())
+                .role(signupRequest.getRole())
+                .build();
 
         usersRepository.save(user);
     }
