@@ -1,0 +1,26 @@
+services:
+  postgresql:
+    container_name: postgresql
+    image: postgres:16.1
+    environment:
+      POSTGRES_DB: "postgres"
+      POSTGRES_USER: ${SPRING_DATASOURCE_USERNAME}
+      POSTGRES_PASSWORD: ${SPRING_DATASOURCE_PASSWORD}
+    ports:
+      - "5432:5432"
+    volumes:
+      - '${POSTGRES_DATA_DB}:/var/lib/postgresql/data'
+    restart: always
+
+  spring-boot-app:
+    container_name: spring-boot-app
+    image: amazoncorretto:17.0.10
+    volumes:
+      - "./build/libs/InternetVeshey-0.0.1-SNAPSHOT.jar:/build/libs/InternetVeshey-0.0.1-SNAPSHOT.jar"
+    command: "java -jar /build/libs/InternetVeshey-0.0.1-SNAPSHOT.jar"
+    depends_on:
+      - postgresql
+    ports:
+      - "8080:8080"
+    env_file:
+      - .env

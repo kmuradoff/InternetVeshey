@@ -6,6 +6,5 @@ CREATE TABLE internet_veshey.car_model (
     name VARCHAR(255) NOT NULL,
     year INT NOT NULL,
     engine VARCHAR(255) NOT NULL,
-    transmission VARCHAR(255) NOT NULL,
-    color VARCHAR(255) NOT NULL DEFAULT 'white'
+    transmission VARCHAR(255) NOT NULL
 );
