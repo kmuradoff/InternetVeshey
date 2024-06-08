@@ -2,12 +2,15 @@ package ru.unn.internetveshey.services;
 
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import org.springframework.boot.web.servlet.server.Session;
 import org.springframework.stereotype.Service;
 import ru.unn.internetveshey.dto.RideDto;
 import ru.unn.internetveshey.dto.enums.Currency;
 import ru.unn.internetveshey.jpa.model.Ride;
 import ru.unn.internetveshey.jpa.model.payment.Invoice;
+import ru.unn.internetveshey.jpa.repository.CarRepository;
+import ru.unn.internetveshey.jpa.repository.InvoiceRepository;
 import ru.unn.internetveshey.jpa.repository.RideRepository;
 import ru.unn.internetveshey.jpa.repository.UserRepository;
 import ru.unn.internetveshey.mapper.CarMapper;
@@ -20,15 +23,24 @@ import java.time.LocalDateTime;
 public class RequestRideService {
     private final UserRepository userRepository;
     private final RideRepository rideRepository;
+    private final CarRepository carRepository;
+    private final InvoiceRepository invoiceRepository;
     private final CarMapper carMapper;
     private final RideMapper rideMapper;
 
+    @SneakyThrows
     public void requestRide(RideDto rideDto) {
         Ride ride = new Ride();
         ride.setUser(userRepository.findFirstByLoginSafe(rideDto.getUser().getLogin()));
-        ride.setCar(carMapper.toCar(rideDto.getCar()));
+        ride.setCar(carRepository.findFirstByRegistrationNumber(rideDto.getCar().getRegistrationNumber()));
         ride.setStartTime(LocalDateTime.now());
-
+        Invoice invoice = new Invoice();
+        userRepository.findFirstByLoginSafe(rideDto.getUser().getLogin()).getPaymentCards()
+                .forEach(invoice::setPaymentCard);
+        invoice.setCurrency(Currency.RUB);
+        invoice.setRide(ride);
+        ride.setInvoice(invoice);
+        invoiceRepository.save(invoice);
         rideRepository.save(ride);
     }
 

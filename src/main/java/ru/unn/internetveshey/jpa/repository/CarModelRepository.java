@@ -6,4 +6,5 @@ import ru.unn.internetveshey.jpa.model.CarModel;
 
 @Repository
 public interface CarModelRepository extends JpaRepository<CarModel, Long> {
+    CarModel findFirstById(long id);
 }

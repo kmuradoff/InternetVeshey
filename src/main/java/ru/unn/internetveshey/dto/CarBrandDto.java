@@ -12,5 +12,4 @@ public class CarBrandDto {
     private String name;
     private byte[] brandLogo;
     private Set<CarModelDto> carModels;
-    private Colors color;
 }

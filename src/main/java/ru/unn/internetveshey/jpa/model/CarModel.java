@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import ru.unn.internetveshey.dto.enums.CarTransmission;
+import ru.unn.internetveshey.dto.enums.Colors;
 
 @Entity
 @Getter
@@ -18,4 +19,13 @@ public class CarModel {
     private String engine;
     @Enumerated(EnumType.STRING)
     private CarTransmission transmission;
+
+    @Enumerated(EnumType.STRING)
+    private Colors color;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "car_brand_id",
+            referencedColumnName = "id",
+            nullable = false)
+    private CarBrand carBrand;
 }

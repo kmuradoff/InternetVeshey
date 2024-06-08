@@ -2,10 +2,8 @@ package ru.unn.internetveshey.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import ru.unn.internetveshey.dto.PaymentDto;
 import ru.unn.internetveshey.dto.UserInformationDto;
 import ru.unn.internetveshey.services.UserService;
 
@@ -30,6 +28,12 @@ public class UserController {
     @GetMapping("/{login}")
     public ResponseEntity<UserInformationDto> getUserByLogin(@PathVariable("login") String login) {
         return ResponseEntity.ok(userService.getUserByLogin(login));
+    }
+
+    @PostMapping("/add/payment")
+    public ResponseEntity<String> addPayment(@RequestBody PaymentDto paymentDto, @RequestParam String login) {
+        userService.addPayment(login, paymentDto);
+        return ResponseEntity.ok(String.format("Payment added successfully to user %s", login));
     }
 
 }

@@ -11,7 +11,7 @@ import lombok.Setter;
 public class Location {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
-    private double latitude;
-    private double longitude;
+    private Long id;
+    private Double latitude;
+    private Double longitude;
 }

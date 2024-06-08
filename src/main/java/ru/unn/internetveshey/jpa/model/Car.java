@@ -20,10 +20,10 @@ public class Car {
     private boolean isLocked = true;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "car_brand_id",
+    @JoinColumn(name = "car_model_id",
             referencedColumnName = "id",
             nullable = false)
-    private CarBrand carBrand;
+    private CarModel carModel;
 
     @Enumerated(EnumType.STRING)
     private FuelType fuelType;

@@ -44,8 +44,4 @@ public class CarController {
         return ResponseEntity.ok(String.format("Car model %s added successfully to brand %s", carModelDto.getName(), brand));
     }
 
-    @GetMapping("/{brand}")
-    public ResponseEntity<List<CarDto>> getAllCarBrands(@PathVariable String brand) {
-        return ResponseEntity.ok(carService.getAllCarsByBrand(brand));
-    }
 }
